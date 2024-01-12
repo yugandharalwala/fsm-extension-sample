@@ -48,21 +48,16 @@
           // Access_token has a short life stpan and needs to be refreshed before expiring
           // Each extension need to implement its own strategy to fresh it.
           initializeRefreshTokenStrategy(shellSdk, auth);
-
+          console.log(JSON.parse(JSON.stringify(event)));
           // Add a listenner expecting activityID
           shellSdk.onViewState('activityID', async activityID => {
 
             updateUI(`Loading ...`);
 
-            //let serviceContract = await getServiceContract(cloudHost, account, company, activityID);
+            let serviceContract = await getServiceContract(cloudHost, account, company, activityID);
 
-            //updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
+            updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
           });
-          shellSdk.onViewState('TECHNICIAN', id => {
-            updateUI(id);
-          });
-
-
         });
       }
     </script>
