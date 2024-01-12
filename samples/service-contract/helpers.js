@@ -55,7 +55,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
 
                 const serviceContractEquipment = json.data.find(contract => contract.serviceContractEquipment.equipment === activity.equipment);
                 if (!serviceContractEquipment) {
-			console.log('Yugandhar Testing 1');
+			          console.log('Yugandhar Testing 1');
                   resolve(null);
                 } else {
                   fetch(`https://${cloudHost}/api/data/v4/ServiceContract/${serviceContractEquipment.serviceContractEquipment.serviceContract}?dtos=ServiceContract.13&account=${account}&company=${company}`, {
@@ -63,7 +63,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                     })
                       .then(response => response.json())
                       .then(function(json) {
-			console.log('Yugandhar Testing 2');
+			                console.log('Yugandhar Testing 2');
                         resolve(json.data[0].serviceContract);
                       });
                 }
