@@ -54,10 +54,15 @@
 
             updateUI(`Loading ...`);
 
-            let serviceContract = await getServiceContract(cloudHost, account, company, activityID);
+            //let serviceContract = await getServiceContract(cloudHost, account, company, activityID);
 
-            updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
+            //updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
           });
+          shellSdk.onViewState('TECHNICIAN', id => {
+            updateUI(id);
+          });
+
+
         });
       }
     </script>
