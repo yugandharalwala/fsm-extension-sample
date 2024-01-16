@@ -73,10 +73,10 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     //   }
     //   }).then(response1 => response1.json()).then(function(json1) {updateUI(json1.content[0].id)});
 
-   const personQuery= `query:SELECT DISTINCT u.id FROM UnifiedPerson u JOIN Region r ON r.id IN u.regions JOIN Activity a ON r.externalId=a.udf.ZActivityRegion WHERE a.id=${activity_id}`;
+   const personQuery= `SELECT DISTINCT u.id FROM UnifiedPerson u JOIN Region r ON r.id IN u.regions JOIN Activity a ON r.externalId=a.udf.ZActivityRegion WHERE a.id='${activity_id}'`;
  fetch(`https://${cloudHost}/api/query/v1?=?account=${account}&company=${company}&dtos=UnifiedPerson.13;Region.10;Activity.13`,{
   method: "POST",
-  body: JSON.stringify({personQuery}),
+  body: JSON.stringify({"query":personQuery}),
      headers:{
         'Content-Type': 'application/json',
         'X-Client-ID': 'fsm-extension-sample',
