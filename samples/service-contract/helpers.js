@@ -57,8 +57,10 @@ function getServiceContract(cloudHost, account, company, activity_id) {
   return new Promise(resolve => {
     fetch(`https://auth.coresuite.com/api/oauth2/v1/token`, {
       method: "POST",
-      body: 'grant_type=client_credentials&client_id=000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1&client_secret=30b22792-0cf4-49a1-91c1-d202336f5378',
-      headers1
+      body: "grant_type=client_credentials&client_id=000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1&client_secret=30b22792-0cf4-49a1-91c1-d202336f5378",
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
     }).then(response => response.json()).then(function(json) {
     fetch(`https://${cloudHost}/cloud-skill-service/api/v1/tags/search?account=${account}&company=${company}`, {
       method: "POST",
