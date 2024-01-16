@@ -54,7 +54,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       tagBody,
       headers
       }).then(response => response.json()).then(function(json) {updateUI(json)});
-  }
+  });
 
 
   // return new Promise(resolve => {
