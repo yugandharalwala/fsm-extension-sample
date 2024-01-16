@@ -62,16 +62,29 @@ function getServiceContract(cloudHost, account, company, activity_id) {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     }).then(response => response.json()).then(function(json) {
-    fetch(`https://${cloudHost}/cloud-skill-service/api/v1/tags/search?account=${account}&company=${company}`, {
-      method: "POST",
-      body: JSON.stringify(tagBody),
-      headers:{
+    // fetch(`https://${cloudHost}/cloud-skill-service/api/v1/tags/search?account=${account}&company=${company}`, {
+    //   method: "POST",
+    //   body: JSON.stringify(tagBody),
+    //   headers:{
+    //     'Content-Type': 'application/json',
+    //     'X-Client-ID': 'fsm-extension-sample',
+    //     'X-Client-Version': '1.0.0',
+    //     'Authorization': `bearer ${json.access_token}`,
+    //   }
+    //   }).then(response1 => response1.json()).then(function(json1) {updateUI(json1.content[0].id)});
+
+   const personQuery= "SELECT DISTINCT u.id FROM UnifiedPerson u JOIN Region r ON r.id IN u.regions JOIN Activity a ON r.externalId=a.udf.ZActivityRegion WHERE a.id=;
+ fetch(`https://${cloudHost}/api/query/v1?=?account=${account}&company=${company}&dtos=UnifiedPerson.13;Region.10;Activity.13`,{
+  method: "POST",
+  body: JSON.stringify(personQuery+activity_id),
+     headers:{
         'Content-Type': 'application/json',
         'X-Client-ID': 'fsm-extension-sample',
         'X-Client-Version': '1.0.0',
         'Authorization': `bearer ${json.access_token}`,
       }
-      }).then(response1 => response1.json()).then(function(json1) {updateUI(json1.content[0].id)});
+ }).response1.json()).then(function(json1) {updateUI(JSON.stringify(json1))});
+
   });
 });
 
