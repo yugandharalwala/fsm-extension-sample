@@ -19,10 +19,7 @@ function initializeRefreshTokenStrategy(shellSdk, auth) {
       response_type: 'token'  // request a user token within the context
     });
   }
-  shellSdk.onViewState('technician', technician => {
-    updateUI (`Received technician id: ${technician}`); //-> "7210EF1AA75A4B94B08869E5E9395F8C"   or null
-    // use the public API from SAP Field Service Management to retrieve the technician detail object
-  });
+
   sessionStorage.setItem('token', auth.access_token);
   setTimeout(() => fetchToken(), (auth.expires_in * 1000) - 5000);
 }
@@ -38,6 +35,14 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     'X-Client-Version': '1.0.0',
     'Authorization': `bearer ${sessionStorage.getItem('token')}`,
   };
+  const headers1 = {
+    'Content-Type': 'application/x-www-form-urlencodedn'
+  };
+  const token1 = {
+    'grant_type': 'client_credentials',
+    'client_id':'000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
+    'client_secret':'30b22792-0cf4-49a1-91c1-d202336f5378'
+  };
   const tagBody={
       "filter": [{
         "field": "name",
@@ -49,12 +54,23 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     }
   
   return new Promise(resolve => {
+    fetch(`https://auth.coresuite.com/api/oauth2/v1/token`, {
+      method: "POST",
+      body: JSON.stringify(token1),
+      headers1
+    }).then(response => response.json()).then(function(json) {
     fetch(`https://${cloudHost}/cloud-skill-service/api/v1/tags/search?account=${account}&company=${company}`, {
       method: "POST",
       body: JSON.stringify(tagBody),
-      headers
+      {
+        'Content-Type': 'application/json',
+        'X-Client-ID': 'fsm-extension-sample',
+        'X-Client-Version': '1.0.0',
+        'Authorization': `bearer ${json.access_token}`,
+      }
       }).then(response => response.json()).then(function(json) {updateUI(json)});
   });
+});
 
 
   // return new Promise(resolve => {
