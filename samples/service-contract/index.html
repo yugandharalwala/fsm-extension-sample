@@ -49,20 +49,15 @@
           initializeRefreshTokenStrategy(shellSdk, auth);
           console.log(JSON.parse(JSON.stringify(event)));
           // Add a listenner expecting activityID
-          shellSdk.onViewState('activityID', async activityID => {
+         // shellSdk.onViewState('activityID', async activityID => {
+          shellSdk.onViewState('technician', technician => {
+            updateUI(`Loading ...${technician}`);
 
-            updateUI(`Loading ...`);
+            //let serviceContract = await getServiceContract(cloudHost, account, company, activityID);
 
-            let serviceContract = await getServiceContract(cloudHost, account, company, activityID);
-
-            updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
+           // updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
           });
-        });
-        shellSdk.onViewState('technician', technician => {
-  displayMessage (`Received technician id: ${technician}`); //-> "7210EF1AA75A4B94B08869E5E9395F8C"   or null
-  // use the public API from SAP Field Service Management to retrieve the technician detail object
-});
-        
+        }); 
       }
     </script>
   </body>
