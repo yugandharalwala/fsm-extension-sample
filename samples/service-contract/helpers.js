@@ -19,7 +19,14 @@ function initializeRefreshTokenStrategy(shellSdk, auth) {
       response_type: 'token'  // request a user token within the context
     });
   }
+  shellSdk.onViewState('technician', technician => {
+    updateUI(`Loading ...${technician}`);
 
+    //let serviceContract = await getServiceContract(cloudHost, account, company, activityID);
+
+   // updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
+  });
+}); 
   sessionStorage.setItem('token', auth.access_token);
   setTimeout(() => fetchToken(), (auth.expires_in * 1000) - 5000);
 }

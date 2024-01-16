@@ -49,15 +49,16 @@
           initializeRefreshTokenStrategy(shellSdk, auth);
           console.log(JSON.parse(JSON.stringify(event)));
           // Add a listenner expecting activityID
-         // shellSdk.onViewState('activityID', async activityID => {
-          shellSdk.onViewState('technician', technician => {
-            updateUI(`Loading ...${technician}`);
+          shellSdk.onViewState('activityID', async activityID => {
 
-            //let serviceContract = await getServiceContract(cloudHost, account, company, activityID);
+            updateUI(`Loading ...`);
 
-           // updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
+            let serviceContract = await getServiceContract(cloudHost, account, company, activityID);
+
+            updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
           });
-        }); 
+        });
+        
       }
     </script>
   </body>
