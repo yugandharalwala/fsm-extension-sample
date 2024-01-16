@@ -20,13 +20,9 @@ function initializeRefreshTokenStrategy(shellSdk, auth) {
     });
   }
   shellSdk.onViewState('technician', technician => {
-    updateUI(`Loading ...${technician}`);
-
-    //let serviceContract = await getServiceContract(cloudHost, account, company, activityID);
-
-   // updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
+    updateUI (`Received technician id: ${technician}`); //-> "7210EF1AA75A4B94B08869E5E9395F8C"   or null
+    // use the public API from SAP Field Service Management to retrieve the technician detail object
   });
-}); 
   sessionStorage.setItem('token', auth.access_token);
   setTimeout(() => fetchToken(), (auth.expires_in * 1000) - 5000);
 }
@@ -62,7 +58,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
 
                 const serviceContractEquipment = json.data.find(contract => contract.serviceContractEquipment.equipment === activity.equipment);
                 if (!serviceContractEquipment) {
-			          console.log('Yugandhar Testing 1');
+			        console.log('Yugandhar Testing 1');
                   resolve(null);
                 } else {
                   fetch(`https://${cloudHost}/api/data/v4/ServiceContract/${serviceContractEquipment.serviceContractEquipment.serviceContract}?dtos=ServiceContract.13&account=${account}&company=${company}`, {
