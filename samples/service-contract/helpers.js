@@ -49,7 +49,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     }
   
   return new Promise(resolve => {
-    fetch(`https://${cloudHost}/cloud-skill-service/api/v1/tags/search?account=${account}&company=${company}`, {
+    fetch(`https://${cloudHost}/api/v1/tags/search?account=${account}&company=${company}`, {
       method: "POST",
       body: JSON.stringify(tagBody),
       headers
