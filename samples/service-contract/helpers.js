@@ -57,7 +57,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
   return new Promise(resolve => {
     fetch(`https://auth.coresuite.com/api/oauth2/v1/token`, {
       method: "POST",
-      body: "grant_type=client_credentials&client_id=000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1&client_secret=30b22792-0cf4-49a1-91c1-d202336f5378",
+      body: "grant_type=client_credentials&client_id=000178da-38e4-471a-bfa0-0e7fb67bf90b&client_secret=e217dcc4-1107-41f5-a0a6-1b34a7652a16",
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -71,7 +71,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
         'X-Client-Version': '1.0.0',
         'Authorization': `bearer ${json.access_token}`,
       }
-      }).then(response => response.json()).then(function(json) {updateUI(json)});
+      }).then(response1 => response1.json()).then(function(json1) {updateUI(json1)});
   });
 });
 
