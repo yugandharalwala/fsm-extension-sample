@@ -31,10 +31,6 @@
             response_type: 'token'  // request a user token within the context
           }
         });
-        shellSdk.emit(SHELL_EVENTS.Version1.TO_APP, {
-        id: 'Distance',    
-        payload: { name: 'Distance' }  
-    });
         // Callback on fsm context response
         shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, (event) => {
 
@@ -62,8 +58,9 @@
             updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
           });
         });
-        shellSdk.onViewState('Distance', async distance => {
-updateUI(Distance);
+        shellSdk.onViewState('technician', technician => {
+  displayMessage (`Received technician id: ${technician}`); //-> "7210EF1AA75A4B94B08869E5E9395F8C"   or null
+  // use the public API from SAP Field Service Management to retrieve the technician detail object
 });
         
       }
