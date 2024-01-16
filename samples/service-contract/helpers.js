@@ -38,6 +38,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
   const headers1 = {
     'Content-Type': 'application/x-www-form-urlencodedn'
   };
+ 
   const token1 = {
     'grant_type': 'client_credentials',
     'client_id':'000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
@@ -62,7 +63,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     fetch(`https://${cloudHost}/cloud-skill-service/api/v1/tags/search?account=${account}&company=${company}`, {
       method: "POST",
       body: JSON.stringify(tagBody),
-      {
+      headers:{
         'Content-Type': 'application/json',
         'X-Client-ID': 'fsm-extension-sample',
         'X-Client-Version': '1.0.0',
