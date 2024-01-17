@@ -54,7 +54,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       "size": 20 
     }
   var personsUids=[];
-  
+  var tagIds=[];
   return new Promise(resolve => {
     fetch(`https://auth.coresuite.com/api/oauth2/v1/token`, {
       method: "POST",
@@ -75,7 +75,8 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     //   }).then(response1 => response1.json()).then(function(json1) {updateUI(json1.content[0].id)});
 
    const personQuery= `SELECT DISTINCT u.id FROM UnifiedPerson u JOIN Region r ON r.id IN u.regions JOIN Activity a ON r.externalId=a.udf.zActWLA WHERE a.id='${activity_id}'`;
- fetch(`https://${cloudHost}/api/query/v1?account=${account}&company=${company}&dtos=UnifiedPerson.13;Region.10;Activity.13`,{
+    const tagsQuery=`SELECT r.tag from Requirement r WHERE r.object.objectId='${activity_id}'`;
+   fetch(`https://${cloudHost}/api/query/v1?account=${account}&company=${company}&dtos=UnifiedPerson.13;Region.10;Activity.13`,{
   method: "POST",
   body: JSON.stringify({"query":personQuery}),
      headers:{
@@ -91,25 +92,42 @@ function getServiceContract(cloudHost, account, company, activity_id) {
    });
   console.log(personsUids);
 }).then(function(json2){
-  fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
-    mode: 'no-cors',
-    credentials: 'include',
+  fetch(`https://${cloudHost}/api/query/v1?account=${account}&company=${company}&dtos=Requirement.10`,{
     method: "POST",
-    body: JSON.stringify({ "policy": "Distance", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
-    headers:{
-      'Content-Type': 'application/json',
-      'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
-      'X-Client-Version': 'v4',
-      'X-Account-Id':'96474',
-      'X-Account-Name':'agilent_T0',
-      'X-Company-Id':'106651',
-      'X-Company-Name':'Agilent_Worldwide',
-      'Access-Control-Allow-Origin': 'https://yugandharalwala.github.io',
-      'Access-Control-Allow-Credentials': true,
-      'Access-Control-Allow-Methods':'GET, DELETE, HEAD, OPTIONS',
-      'Authorization': `bearer ${json.access_token}`
-    }
-  }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
+    body: JSON.stringify({"query":tagsQuery}),
+       headers:{
+          'Content-Type': 'application/json',
+          'X-Client-ID': 'fsm-extension-sample',
+          'X-Client-Version': '1.0.0',
+          'Authorization': `bearer ${json.access_token}`,
+        }
+   }).then(response2 => response2.json()).then(function(tags) {
+    //updateUI(JSON.stringify(json1))
+    tags.data.forEach(function(value){
+      tagIds.push(value.r.id)
+     });
+console.log("tag Ids"+tagIds);
+
+
+  // fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
+  //   mode: 'no-cors',
+  //   credentials: 'include',
+  //   method: "POST",
+  //   body: JSON.stringify({ "policy": "Distance", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
+  //   headers:{
+  //     'Content-Type': 'application/json',
+  //     'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
+  //     'X-Client-Version': 'v4',
+  //     'X-Account-Id':'96474',
+  //     'X-Account-Name':'agilent_T0',
+  //     'X-Company-Id':'106651',
+  //     'X-Company-Name':'Agilent_Worldwide',
+  //     'Access-Control-Allow-Origin': 'https://yugandharalwala.github.io',
+  //     'Access-Control-Allow-Credentials': true,
+  //     'Access-Control-Allow-Methods':'GET, DELETE, HEAD, OPTIONS',
+  //     'Authorization': `bearer ${json.access_token}`
+  //   }
+  // }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
 
 });
 
