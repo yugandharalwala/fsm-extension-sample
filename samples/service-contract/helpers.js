@@ -107,7 +107,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     tags.data.forEach(function(value){
       tagIds.push(value.r.id)
      });
-console.log("tag Ids"+tagIds);
+console.log(tagIds);
 
 
   // fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
