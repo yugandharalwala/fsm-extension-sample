@@ -98,6 +98,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'Content-Type': 'application/json',
       'X-Client-ID': 'fsm-extension-sample',
       'X-Client-Version': '1.0.0',
+      'Access-Control-Allow-Origin': '*',
       'Authorization': `bearer ${json.access_token}`,
     }
   }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3)) });
