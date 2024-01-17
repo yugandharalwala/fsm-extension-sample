@@ -91,9 +91,9 @@ function getServiceContract(cloudHost, account, company, activity_id) {
    });
   console.log(personsUids);
 }).then(function(json2){
-  fetch(`https://${cloudHost}/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
+  fetch(`https://${cloudHost}/optimization/api/v2/jobs/${activity_id}/best-matching-technicians?account=${account}&company=${company}`, {
     method: "POST",
-    body: JSON.stringify({"optimizationPlugin":"Distance","policy":"Admin (pre-configured)","resources":{"includeInternalPersons":true,"includeCrowdPersons":false,"personIds":personsUids},"schedulingOptions":{"timezoneId":"Asia/Calcutta","overlapBookings":false,"maxResults":10,"defaultDrivingTimeMinutes":0},"additionalDataOptions":{"useBlacklist":false,"enableRealTimeLocation":true,"realTimeLocationThresholdInMinutes":60,"includePlannedJobsAsBookings":false}}),
+    body: JSON.stringify({ "policy": "Admin (pre-configured)", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
     headers:{
       'Content-Type': 'application/json',
       'X-Client-ID': 'fsm-extension-sample',
