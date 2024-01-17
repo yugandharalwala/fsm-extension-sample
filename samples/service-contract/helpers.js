@@ -92,7 +92,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
   console.log(personsUids);
 }).then(function(json2){
   fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
-    mode: 'no-cors',
+    //mode: 'no-cors',
     method: "POST",
     body: JSON.stringify({ "policy": "Distance", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
     headers:{
@@ -103,9 +103,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'X-Account-Name':'agilent_T0',
       'X-Company-Id':'106651',
       'X-Company-Name':'Agilent_Worldwide',
-      'Access-Control-Allow-Origin': '*',
-      'Cross-Origin-Opener-Policy': 'unsafe-none',
-      'Cross-Origin-Resource-Policy':'cross-origin',
+      'Access-Control-Allow-Origin': 'https://yugandharalwala.github.io',
       'Authorization': `bearer ${json.access_token}`
     }
   }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
