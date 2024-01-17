@@ -53,7 +53,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       "page": 0,
       "size": 20 
     }
-  
+  var personsUids=[];
   return new Promise(resolve => {
     fetch(`https://auth.coresuite.com/api/oauth2/v1/token`, {
       method: "POST",
@@ -83,7 +83,13 @@ function getServiceContract(cloudHost, account, company, activity_id) {
         'X-Client-Version': '1.0.0',
         'Authorization': `bearer ${json.access_token}`,
       }
- }).then(response1 => response1.json()).then(function(json1) {updateUI(JSON.stringify(json1))});
+ }).then(response1 => response1.json()).then(function(json1) {
+  //updateUI(JSON.stringify(json1))
+  json1.array.forEach(element => {
+    personsUids.push(element.id)
+  });
+console.log(personsUids);
+});
 
   });
 });
