@@ -105,7 +105,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
    }).then(response2 => response2.json()).then(function(tags) {
     //updateUI(JSON.stringify(json1))
     tags.data.forEach(function(value){
-      tagIds.push(value.r.id)
+      tagIds.push(value.r.tag)
      });
 console.log(tagIds);
 
