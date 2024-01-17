@@ -159,7 +159,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     }
   }).then(tagResponse => tagResponse.json()).then(function(tagData) {
     tagData.content.forEach(function(scale){
-      scaleTag.push(tagIds[0],scale.scaleId)
+      scaleTag.set(tagIds[0],scale.scaleId)
      });  
   }).then(function(tagTechSearch){
     scaleTag.forEach((tagId, scaleId) => {
