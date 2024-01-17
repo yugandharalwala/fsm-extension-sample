@@ -92,7 +92,6 @@ function getServiceContract(cloudHost, account, company, activity_id) {
   console.log(personsUids);
 }).then(function(json2){
   fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
-    mode: 'no-cors',
     method: "POST",
     body: JSON.stringify({ "policy": "Admin", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
     headers:{
@@ -102,9 +101,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'X-Account-Id':'96474',
       'X-Account-Name':'agilent_T0',
       'X-Company-Id':'106651',
-      'X-Company-Name':'Agilent_Worldwide',
-      'Access-Control-Allow-Origin': '*',
-      'Cross-Origin-Embedder-Policy': 'require-corp',
+      'X-Company-Name':'Agilent_Worldwide'
       'Authorization': `bearer ${sessionStorage.getItem('token')}`,
     }
   }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
