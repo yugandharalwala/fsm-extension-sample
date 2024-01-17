@@ -54,6 +54,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       "size": 20 
     }
   var personsUids=[];
+  
   return new Promise(resolve => {
     fetch(`https://auth.coresuite.com/api/oauth2/v1/token`, {
       method: "POST",
@@ -89,6 +90,18 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     personsUids.push(currentValue.u.id)
    });
   console.log(personsUids);
+}).then(function(json2){
+  fetch(`https://${cloudHost}/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
+    method: "POST",
+    body: JSON.stringify({"optimizationPlugin":"Distance","resources":{"policy":"Admin (pre-configured)","includeInternalPersons":true,"includeCrowdPersons":false,"personIds":personsUids},"schedulingOptions":{"spanJobs":false,"computeDrivingTime":true,"timezoneId":"Asia/Calcutta","overlapBookings":false,"maxResults":10,"defaultDrivingTimeMinutes":0},"additionalDataOptions":{"useBlacklist":false,"enableRealTimeLocation":true,"realTimeLocationThresholdInMinutes":60,"includePlannedJobsAsBookings":false}}),
+    headers:{
+      'Content-Type': 'application/json',
+      'X-Client-ID': 'fsm-extension-sample',
+      'X-Client-Version': '1.0.0',
+      'Authorization': `bearer ${json.access_token}`,
+    }
+  }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3) });
+
 });
 
   });
