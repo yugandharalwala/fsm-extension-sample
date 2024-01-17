@@ -98,7 +98,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     headers:{
       'Content-Type': 'application/json',
       'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
-      'X-Client-Version': 'v2',
+      'X-Client-Version': 'v4',
       'X-Account-Id':'96474',
       'X-Account-Name':'agilent_T0',
       'X-Company-Id':'106651',
