@@ -85,10 +85,10 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       }
  }).then(response1 => response1.json()).then(function(json1) {
   //updateUI(JSON.stringify(json1))
-  // JSON.stringify(json1).forEach(function(currentValue){
-  //   personsUids.push(currentValue.id)
-  // });
-console.log(json1);
+  json1.data.forEach(function(currentValue){
+    personsUids.push(currentValue.id)
+   });
+console.log(personsUids);
 });
 
   });
