@@ -106,8 +106,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'X-Company-Name':'Agilent_Worldwide',
       'Access-Control-Allow-Origin': 'https://yugandharalwala.github.io',
       'Access-Control-Allow-Credentials': true,
-      'Access-Control-Allow-Methods':'GET, DELETE, HEAD, OPTIONS'
-      ''
+      'Access-Control-Allow-Methods':'GET, DELETE, HEAD, OPTIONS',
       'Authorization': `bearer ${json.access_token}`
     }
   }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
