@@ -104,7 +104,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'X-Company-Id':'106651',
       'X-Company-Name':'Agilent_Worldwide',
       'Access-Control-Allow-Origin': '*',
-      'Cross-Origin-Resource-Policy':'same-site | same-origin | cross-site'
+      'Cross-Origin-Resource-Policy':'same-site | same-origin | cross-site',
       'Authorization': `bearer ${sessionStorage.getItem('token')}`
     }
   }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
