@@ -63,6 +63,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     }).then(response => response.json()).then(function(json) {
+
     // fetch(`https://${cloudHost}/cloud-skill-service/api/v1/tags/search?account=${account}&company=${company}`, {
     //   method: "POST",
     //   body: JSON.stringify(tagBody),
@@ -134,7 +135,7 @@ console.log("tag Ids"+tagIds);
   });
 });
 
-
+  });
   // return new Promise(resolve => {
 
   //   // Fetch Activity object
