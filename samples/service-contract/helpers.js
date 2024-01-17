@@ -92,6 +92,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
   console.log(personsUids);
 }).then(function(json2){
   fetch(`https://${cloudHost}/optimization/api/v2/jobs/${activity_id}/best-matching-technicians?account=${account}&company=${company}`, {
+    mode: 'no-cors',
     method: "POST",
     body: JSON.stringify({ "policy": "Admin (pre-configured)", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
     headers:{
@@ -101,7 +102,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'Access-Control-Allow-Origin': '*',
       'Authorization': `bearer ${json.access_token}`,
     }
-  }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3)) });
+  }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
 
 });
 
