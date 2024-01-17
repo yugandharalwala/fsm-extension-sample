@@ -93,7 +93,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
 }).then(function(json2){
   fetch(`https://${cloudHost}/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
     method: "POST",
-    body: JSON.stringify({"optimizationPlugin":"Distance","resources":{"policy":"Admin (pre-configured)","includeInternalPersons":true,"includeCrowdPersons":false,"personIds":personsUids},"schedulingOptions":{"spanJobs":false,"computeDrivingTime":true,"timezoneId":"Asia/Calcutta","overlapBookings":false,"maxResults":10,"defaultDrivingTimeMinutes":0},"additionalDataOptions":{"useBlacklist":false,"enableRealTimeLocation":true,"realTimeLocationThresholdInMinutes":60,"includePlannedJobsAsBookings":false}}),
+    body: JSON.stringify({"optimizationPlugin":"Distance","policy":"Admin (pre-configured)","resources":{"includeInternalPersons":true,"includeCrowdPersons":false,"personIds":personsUids},"schedulingOptions":{"timezoneId":"Asia/Calcutta","overlapBookings":false,"maxResults":10,"defaultDrivingTimeMinutes":0},"additionalDataOptions":{"useBlacklist":false,"enableRealTimeLocation":true,"realTimeLocationThresholdInMinutes":60,"includePlannedJobsAsBookings":false}}),
     headers:{
       'Content-Type': 'application/json',
       'X-Client-ID': 'fsm-extension-sample',
