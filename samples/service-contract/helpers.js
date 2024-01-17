@@ -33,7 +33,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     'Content-Type': 'application/json',
     'X-Client-ID': 'fsm-extension-sample',
     'X-Client-Version': '1.0.0',
-    'Authorization': `bearer ${sessionStorage.getItem('token')}`,
+    'Authorization': `bearer ${sessionStorage.getItem('token')}`
   };
   const headers1 = {
     'Content-Type': 'application/x-www-form-urlencodedn'
@@ -91,9 +91,10 @@ function getServiceContract(cloudHost, account, company, activity_id) {
    });
   console.log(personsUids);
 }).then(function(json2){
-  fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
+  fetch(`https://${cloudHost}/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
+    mode: 'no-cors',
     method: "POST",
-    body: JSON.stringify({ "policy": "Admin", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
+    body: JSON.stringify({ "policy": "Distance", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
     headers:{
       'Content-Type': 'application/json',
       'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
@@ -103,7 +104,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'X-Company-Id':'106651',
       'X-Company-Name':'Agilent_Worldwide',
       'Access-Control-Allow-Origin': '*',
-      'Authorization': `bearer ${sessionStorage.getItem('token')}`,
+      'Authorization': `bearer ${sessionStorage.getItem('token')}`
     }
   }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
 
