@@ -91,14 +91,19 @@ function getServiceContract(cloudHost, account, company, activity_id) {
    });
   console.log(personsUids);
 }).then(function(json2){
-  fetch(`https://${cloudHost}/optimization/api/v2/jobs/${activity_id}/best-matching-technicians?account=${account}&company=${company}`, {
+  fetch(`https://${cloudHost}/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
     mode: 'no-cors',
     method: "POST",
-    body: JSON.stringify({ "policy": "Admin (pre-configured)", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
+    body: JSON.stringify({ "policy": "Admin", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
     headers:{
       'Content-Type': 'application/json',
-      'X-Client-ID': 'fsm-extension-sample',
-      'X-Client-Version': '1.0.0',
+      'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
+      'X-Client-Version': 'v1',
+      'X-Account-Id':'96474',
+      'X-Account-Name':'agilent_T0',
+      'X-Company-Id':'106651',
+      'X-Company-Name':'Agilent_Worldwide',
+      ''
       'Access-Control-Allow-Origin': '*',
       'Authorization': `bearer ${json.access_token}`,
     }
