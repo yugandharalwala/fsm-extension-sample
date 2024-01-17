@@ -101,8 +101,8 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'X-Account-Id':'96474',
       'X-Account-Name':'agilent_T0',
       'X-Company-Id':'106651',
-      'X-Company-Name':'Agilent_Worldwide'
-      'Authorization': `bearer ${sessionStorage.getItem('token')}`,
+      'X-Company-Name':'Agilent_Worldwide',
+      'Authorization': `bearer ${sessionStorage.getItem('token')}`
     }
   }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
 
