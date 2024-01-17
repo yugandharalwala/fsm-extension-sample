@@ -100,7 +100,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'X-Client-Version': '1.0.0',
       'Authorization': `bearer ${json.access_token}`,
     }
-  }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3) });
+  }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3)) });
 
 });
 
