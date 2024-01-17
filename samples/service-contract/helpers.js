@@ -107,7 +107,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     tags.data.forEach(function(value){
       tagIds.push(value.r.tag)
      });
-console.log(tagIds);
+    console.log(tagIds);
 
 
   // fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
@@ -129,6 +129,31 @@ console.log(tagIds);
   //     'Authorization': `bearer ${json.access_token}`
   //   }
   // }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
+
+}).then(function(json3){
+ const tbody= {
+    "filter": [{
+      "field": "id",
+      "operator": "=",
+      "value": tagIds[0]
+    }], 
+    "page": 0,
+    "size": 20 
+  }
+  fetch(`https://us.coresystems.net/cloud-skill-service/api/v1/tags/search`, {
+    method: "POST",
+    body: JSON.stringify(tbody),
+    headers:{
+      'Content-Type': 'application/json',
+      'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
+      'X-Client-Version': 'v4',
+      'X-Account-Id':'96474',
+      'X-Account-Name':'agilent_T0',
+      'X-Company-Id':'106651',
+      'X-Company-Name':'Agilent_Worldwide',
+      'Authorization': `bearer ${json.access_token}`
+    }
+  }).then(tagResponse => tagResponse.json()).then(function(tagData) {updateUI(JSON.stringify(tagData))});
 
 });
 
