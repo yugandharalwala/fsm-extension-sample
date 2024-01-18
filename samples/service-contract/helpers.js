@@ -29,6 +29,10 @@ function initializeRefreshTokenStrategy(shellSdk, auth) {
 //
 function getServiceContract(cloudHost, account, company, activity_id) {
   
+
+
+
+
   const headers = {
     'Content-Type': 'application/json',
     'X-Client-ID': 'fsm-extension-sample',
@@ -53,8 +57,9 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       "page": 0,
       "size": 20 
     }
-  var personsUids=[];
-  
+    const personsUids=new Map();
+  var tagIds=[];
+  const scaleTag = new Map();
   return new Promise(resolve => {
     fetch(`https://auth.coresuite.com/api/oauth2/v1/token`, {
       method: "POST",
@@ -63,6 +68,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     }).then(response => response.json()).then(function(json) {
+
     // fetch(`https://${cloudHost}/cloud-skill-service/api/v1/tags/search?account=${account}&company=${company}`, {
     //   method: "POST",
     //   body: JSON.stringify(tagBody),
@@ -74,8 +80,10 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     //   }
     //   }).then(response1 => response1.json()).then(function(json1) {updateUI(json1.content[0].id)});
 
-   const personQuery= `SELECT DISTINCT u.id FROM UnifiedPerson u JOIN Region r ON r.id IN u.regions JOIN Activity a ON r.externalId=a.udf.zActWLA WHERE a.id='${activity_id}'`;
- fetch(`https://${cloudHost}/api/query/v1?account=${account}&company=${company}&dtos=UnifiedPerson.13;Region.10;Activity.13`,{
+   const personQuery= `SELECT DISTINCT u.id,u.firstName+' '+u.lastName as name FROM UnifiedPerson u JOIN Region r ON r.id IN u.regions JOIN Activity a ON r.externalId=a.udf.zActWLA WHERE a.id='${activity_id}'`;
+    const tagsQuery=`SELECT r.tag from Requirement r WHERE r.object.objectId='${activity_id}'`;
+    //fetch persons based on activity region
+   fetch(`https://${cloudHost}/api/query/v1?account=${account}&company=${company}&dtos=UnifiedPerson.13;Region.10;Activity.13`,{
   method: "POST",
   body: JSON.stringify({"query":personQuery}),
      headers:{
@@ -87,15 +95,71 @@ function getServiceContract(cloudHost, account, company, activity_id) {
  }).then(response1 => response1.json()).then(function(json1) {
   //updateUI(JSON.stringify(json1))
   json1.data.forEach(function(currentValue){
-    personsUids.push(currentValue.u.id)
+    personsUids.set(currentValue.u.id,currentValue.name)
    });
   console.log(personsUids);
 }).then(function(json2){
-  fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
-  mode:'no-cors',
-  credentials: 'include',  
-  method: "POST",
-    body: JSON.stringify({ "policy": "Distance", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
+  //fetch tag ids by passing activity id to requirement table
+  fetch(`https://${cloudHost}/api/query/v1?account=${account}&company=${company}&dtos=Requirement.10`,{
+    method: "POST",
+    body: JSON.stringify({"query":tagsQuery}),
+       headers:{
+          'Content-Type': 'application/json',
+          'X-Client-ID': 'fsm-extension-sample',
+          'X-Client-Version': '1.0.0',
+          'Authorization': `bearer ${json.access_token}`,
+        }
+   }).then(response2 => response2.json()).then(function(tags) {
+    //updateUI(JSON.stringify(json1))
+    tags.data.forEach(function(value){
+      tagIds.push(value.r.tag)
+     });
+    console.log(tagIds);
+
+})
+// .then(function(json3){
+//  const tbody= {
+//     "filter": [{
+//       "field": "id",
+//       "operator": "=",
+//       "value": tagIds[0]
+//     }], 
+//     "page": 0,
+//     "size": 20 
+//   }
+//   //get scale ids by passing the tag ids into Tag search API
+//   fetch(`https://us.coresystems.net/cloud-skill-service/api/v1/tags/search`, {
+//     method: "POST",
+//     body: JSON.stringify(tbody),
+//     headers:{
+//       'Content-Type': 'application/json',
+//       'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
+//       'X-Client-Version': 'v4',
+//       'X-Account-Id':'96474',
+//       'X-Account-Name':'agilent_T0',
+//       'X-Company-Id':'106651',
+//       'X-Company-Name':'Agilent_Worldwide',
+//       'Authorization': `bearer ${json.access_token}`
+//     }
+//   }).then(tagResponse => tagResponse.json()).then(function(tagData) {
+//     tagData.content.forEach(function(scale){
+//       scaleTag.set(tagIds[0],scale.scaleId)
+//        });  
+//   })
+  .then(function(tagTechSearch){
+    tagIds.forEach((tagId,index) => {
+      const tagTechbody= {
+        "filter": [{
+          "field": "technicianId",
+          "operator": "=",
+          "value": personsUids.keys().next().value
+        }], 
+        "page": 0,
+        "size": 20 
+      }
+      fetch(`https://us.coresystems.net/cloud-skill-service/api/v1/tags/${tagId}/skills/search`, {
+    method: "POST",
+    body: JSON.stringify(tagTechbody),
     headers:{
       'Content-Type': 'application/json',
       'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
@@ -104,20 +168,25 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'X-Account-Name':'agilent_T0',
       'X-Company-Id':'106651',
       'X-Company-Name':'Agilent_Worldwide',
-      'Access-Control-Allow-Origin':'*',
-      'Access-Control-Allow-Methods':'GET,POST,PUT,PATCH,DELETE',
-      'Access-Control-Allow-Headers':'Origin, X-Requested-With, Content-Type, Accept',
-      'Cross-Origin-Resource-Policy':'cross-origin',
       'Authorization': `bearer ${json.access_token}`
     }
-  }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
+  }).then(profResoonse=>profResoonse.json()).then(function(profRes){
 
+    profRes.content.forEach(function(prof) {
+      updateUI(`${personsUids.get(prof.technicianId)}`+`\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+    });
+  
+  });
+
+  });
+
+  });
 });
 
   });
 });
 
-
+  });
   // return new Promise(resolve => {
 
   //   // Fetch Activity object
@@ -137,7 +206,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
 
   //               const serviceContractEquipment = json.data.find(contract => contract.serviceContractEquipment.equipment === activity.equipment);
   //               if (!serviceContractEquipment) {
-	// 		        console.log('Yugandhar Testing 1');
+  //            console.log('Yugandhar Testing 1');
   //                 resolve(null);
   //               } else {
   //                 fetch(`https://${cloudHost}/api/data/v4/ServiceContract/${serviceContractEquipment.serviceContractEquipment.serviceContract}?dtos=ServiceContract.13&account=${account}&company=${company}`, {
@@ -145,7 +214,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
   //                   })
   //                     .then(response => response.json())
   //                     .then(function(json) {
-	// 		                console.log('Yugandhar Testing 2');
+  //                    console.log('Yugandhar Testing 2');
   //                       resolve(json.data[0].serviceContract);
   //                     });
   //               }
@@ -155,5 +224,27 @@ function getServiceContract(cloudHost, account, company, activity_id) {
   //       });
 
   // });
+
+
+    // fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
+  //   mode: 'no-cors',
+  //   credentials: 'include',
+  //   method: "POST",
+  //   body: JSON.stringify({ "policy": "Distance", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
+  //   headers:{
+  //     'Content-Type': 'application/json',
+  //     'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
+  //     'X-Client-Version': 'v4',
+  //     'X-Account-Id':'96474',
+  //     'X-Account-Name':'agilent_T0',
+  //     'X-Company-Id':'106651',
+  //     'X-Company-Name':'Agilent_Worldwide',
+  //     'Access-Control-Allow-Origin': 'https://yugandharalwala.github.io',
+  //     'Access-Control-Allow-Credentials': true,
+  //     'Access-Control-Allow-Methods':'GET, DELETE, HEAD, OPTIONS',
+  //     'Authorization': `bearer ${json.access_token}`
+  //   }
+  // }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
 }
+
 
