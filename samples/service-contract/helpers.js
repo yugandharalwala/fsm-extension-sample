@@ -162,7 +162,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       scaleTag.set(tagIds[0],scale.scaleId)
      });  
   }).then(function(tagTechSearch){
-    scaleTag.forEach((tagId, scaleId) => {
+    scaleTag.forEach((scaleId,tagId) => {
       const tagTechbody= {
         "filter": [{
           "field": "technicianId",
