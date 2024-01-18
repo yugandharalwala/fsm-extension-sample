@@ -107,7 +107,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'Access-Control-Allow-Origin':'*',
       'Access-Control-Allow-Methods':'GET,POST,PUT,PATCH,DELETE',
       'Access-Control-Allow-Headers':'Origin, X-Requested-With, Content-Type, Accept',
-      'cross-origin-resource-policy':'cross-origin',
+      'Cross-Origin-Resource-Policy':'cross-origin',
       'Authorization': `bearer ${json.access_token}`
     }
   }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
