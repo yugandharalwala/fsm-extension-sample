@@ -105,7 +105,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'Access-Control-Allow-Origin': 'https://yugandharalwala.github.io',
       'Access-Control-Allow-Origin':'*',
       'Access-Control-Allow-Methods':'GET,POST,PUT,PATCH,DELETE',
-      'Access-Control-Allow-Methods':'Content-Type','Authorization',
+      'Access-Control-Allow-Headers':'Origin, X-Requested-With, Content-Type, Accept',
       'Authorization': `bearer ${json.access_token}`
     }
   }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
