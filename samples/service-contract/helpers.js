@@ -95,7 +95,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
    });
   console.log(personsUids);
 }).then(function(json2){
-  //fetch tag ids by passing activity ids to requirement table
+  //fetch tag ids by passing activity id to requirement table
   fetch(`https://${cloudHost}/api/query/v1?account=${account}&company=${company}&dtos=Requirement.10`,{
     method: "POST",
     body: JSON.stringify({"query":tagsQuery}),
@@ -112,57 +112,38 @@ function getServiceContract(cloudHost, account, company, activity_id) {
      });
     console.log(tagIds);
 
-
-  // fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
-  //   mode: 'no-cors',
-  //   credentials: 'include',
-  //   method: "POST",
-  //   body: JSON.stringify({ "policy": "Distance", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
-  //   headers:{
-  //     'Content-Type': 'application/json',
-  //     'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
-  //     'X-Client-Version': 'v4',
-  //     'X-Account-Id':'96474',
-  //     'X-Account-Name':'agilent_T0',
-  //     'X-Company-Id':'106651',
-  //     'X-Company-Name':'Agilent_Worldwide',
-  //     'Access-Control-Allow-Origin': 'https://yugandharalwala.github.io',
-  //     'Access-Control-Allow-Credentials': true,
-  //     'Access-Control-Allow-Methods':'GET, DELETE, HEAD, OPTIONS',
-  //     'Authorization': `bearer ${json.access_token}`
-  //   }
-  // }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
-
-}).then(function(json3){
- const tbody= {
-    "filter": [{
-      "field": "id",
-      "operator": "=",
-      "value": tagIds[0]
-    }], 
-    "page": 0,
-    "size": 20 
-  }
-  //get scale ids by passing the tag ids into Tag search API
-  fetch(`https://us.coresystems.net/cloud-skill-service/api/v1/tags/search`, {
-    method: "POST",
-    body: JSON.stringify(tbody),
-    headers:{
-      'Content-Type': 'application/json',
-      'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
-      'X-Client-Version': 'v4',
-      'X-Account-Id':'96474',
-      'X-Account-Name':'agilent_T0',
-      'X-Company-Id':'106651',
-      'X-Company-Name':'Agilent_Worldwide',
-      'Authorization': `bearer ${json.access_token}`
-    }
-  }).then(tagResponse => tagResponse.json()).then(function(tagData) {
-    tagData.content.forEach(function(scale){
-      scaleTag.set(tagIds[0],scale.scaleId)
-       });  
-  }).then(function(tagTechSearch){
-    scaleTag.forEach((scaleId,tagId) => {
+})
+// .then(function(json3){
+//  const tbody= {
+//     "filter": [{
+//       "field": "id",
+//       "operator": "=",
+//       "value": tagIds[0]
+//     }], 
+//     "page": 0,
+//     "size": 20 
+//   }
+//   //get scale ids by passing the tag ids into Tag search API
+//   fetch(`https://us.coresystems.net/cloud-skill-service/api/v1/tags/search`, {
+//     method: "POST",
+//     body: JSON.stringify(tbody),
+//     headers:{
+//       'Content-Type': 'application/json',
+//       'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
+//       'X-Client-Version': 'v4',
+//       'X-Account-Id':'96474',
+//       'X-Account-Name':'agilent_T0',
+//       'X-Company-Id':'106651',
+//       'X-Company-Name':'Agilent_Worldwide',
+//       'Authorization': `bearer ${json.access_token}`
+//     }
+//   }).then(tagResponse => tagResponse.json()).then(function(tagData) {
+//     tagData.content.forEach(function(scale){
+//       scaleTag.set(tagIds[0],scale.scaleId)
+//        });  
+//   })
+  .then(function(tagTechSearch){
+    tagIds.forEach((tagId,index) => {
       const tagTechbody= {
         "filter": [{
           "field": "technicianId",
@@ -239,5 +220,26 @@ function getServiceContract(cloudHost, account, company, activity_id) {
   //       });
 
   // });
+
+
+    // fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
+  //   mode: 'no-cors',
+  //   credentials: 'include',
+  //   method: "POST",
+  //   body: JSON.stringify({ "policy": "Distance", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
+  //   headers:{
+  //     'Content-Type': 'application/json',
+  //     'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
+  //     'X-Client-Version': 'v4',
+  //     'X-Account-Id':'96474',
+  //     'X-Account-Name':'agilent_T0',
+  //     'X-Company-Id':'106651',
+  //     'X-Company-Name':'Agilent_Worldwide',
+  //     'Access-Control-Allow-Origin': 'https://yugandharalwala.github.io',
+  //     'Access-Control-Allow-Credentials': true,
+  //     'Access-Control-Allow-Methods':'GET, DELETE, HEAD, OPTIONS',
+  //     'Authorization': `bearer ${json.access_token}`
+  //   }
+  // }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
 }
 
