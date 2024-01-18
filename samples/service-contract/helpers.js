@@ -160,7 +160,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
   }).then(tagResponse => tagResponse.json()).then(function(tagData) {
     tagData.content.forEach(function(scale){
       scaleTag.set(tagIds[0],scale.scaleId)
-     });  
+       });  
   }).then(function(tagTechSearch){
     scaleTag.forEach((scaleId,tagId) => {
       const tagTechbody= {
@@ -188,7 +188,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
   }).then(profResoonse=>profResoonse.json()).then(function(profRes){
 
     profRes.content.forEach(function(prof) {
-      updateUI(`${personsUids.get(prof.technicianId)}`+`- skill proficiency level :${prof.proficiencyLevel}`);
+      updateUI(`${personsUids.get(prof.technicianId)}`+`-Skill- ${prof.tagName} - skill proficiency level :${prof.proficiencyLevel}`);
     });
   
   });
