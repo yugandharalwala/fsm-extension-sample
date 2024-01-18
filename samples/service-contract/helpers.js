@@ -76,7 +76,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     //   }
     //   }).then(response1 => response1.json()).then(function(json1) {updateUI(json1.content[0].id)});
 
-   const personQuery= `SELECT DISTINCT u.id,p.firstName+' '+p.lastName as name FROM UnifiedPerson u JOIN Region r ON r.id IN u.regions JOIN Activity a ON r.externalId=a.udf.zActWLA WHERE a.id='${activity_id}'`;
+   const personQuery= `SELECT DISTINCT u.id,u.firstName+' '+u.lastName as name FROM UnifiedPerson u JOIN Region r ON r.id IN u.regions JOIN Activity a ON r.externalId=a.udf.zActWLA WHERE a.id='${activity_id}'`;
     const tagsQuery=`SELECT r.tag from Requirement r WHERE r.object.objectId='${activity_id}'`;
     //fetch persons based on activity region
    fetch(`https://${cloudHost}/api/query/v1?account=${account}&company=${company}&dtos=UnifiedPerson.13;Region.10;Activity.13`,{
