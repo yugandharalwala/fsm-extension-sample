@@ -33,7 +33,6 @@ function getServiceContract(cloudHost, account, company, activity_id) {
 
 
 
-
   const headers = {
     'Content-Type': 'application/json',
     'X-Client-ID': 'fsm-extension-sample',
@@ -69,26 +68,6 @@ function getServiceContract(cloudHost, account, company, activity_id) {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     }).then(response => response.json()).then(function(json) {
-
-      fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
-        mode: 'no-cors',
-        credentials: 'include',
-        method: "POST",
-        body: JSON.stringify({ "policy": "Distance", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": ['4A1591D031834646A8DBC03092E35E38'] }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
-        headers:{
-          'Content-Type': 'application/json',
-          'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
-          'X-Client-Version': 'v4',
-          'X-Account-Id':'96474',
-          'X-Account-Name':'agilent_T0',
-          'X-Company-Id':'106651',
-          'X-Company-Name':'Agilent_Worldwide',
-          'Access-Control-Allow-Origin': 'https://yugandharalwala.github.io',
-          'Access-Control-Allow-Credentials': true,
-          'Access-Control-Allow-Methods':'GET, DELETE, HEAD, OPTIONS',
-          'Authorization': `bearer ${json.access_token}`
-        }
-      }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
 
     // fetch(`https://${cloudHost}/cloud-skill-service/api/v1/tags/search?account=${account}&company=${company}`, {
     //   method: "POST",
@@ -192,6 +171,21 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'Authorization': `bearer ${json.access_token}`
     }
   }).then(profResoonse=>profResoonse.json()).then(function(profRes){
+
+    fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
+    method: "POST",
+    body: JSON.stringify({ "policy": "Distance", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": ['4A1591D031834646A8DBC03092E35E38'] }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
+    headers:{
+      'Content-Type': 'application/json',
+      'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
+      'X-Client-Version': 'v4',
+      'X-Account-Id':'96474',
+      'X-Account-Name':'agilent_T0',
+      'X-Company-Id':'106651',
+      'X-Company-Name':'Agilent_Worldwide',
+      'Authorization': `bearer ${json.access_token}`
+    }
+  }).then(response2 => response2.json()).then(function(json3) {updateUI(JSON.stringify(json3))});
 
     profRes.content.forEach(function(prof) {
       updateUI(`${personsUids.get(prof.technicianId)}`+`\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
