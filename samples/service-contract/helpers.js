@@ -102,7 +102,6 @@ function getServiceContract(cloudHost, account, company, activity_id) {
       'X-Account-Name':'agilent_T0',
       'X-Company-Id':'106651',
       'X-Company-Name':'Agilent_Worldwide',
-      'Access-Control-Allow-Origin': 'https://yugandharalwala.github.io',
       'Access-Control-Allow-Origin':'*',
       'Access-Control-Allow-Methods':'GET,POST,PUT,PATCH,DELETE',
       'Access-Control-Allow-Headers':'Origin, X-Requested-With, Content-Type, Accept',
