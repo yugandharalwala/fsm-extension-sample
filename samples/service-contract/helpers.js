@@ -188,7 +188,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
   }).then(profResoonse=>profResoonse.json()).then(function(profRes){
 
     profRes.content.forEach((prof) => {
-ˇ    updateUI(personsUids.get(prof.technicianId))
+ˇ    updateUI(JSON.stringify(personsUids.get(prof.technicianId)))
     });
   
   })
