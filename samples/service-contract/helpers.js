@@ -187,7 +187,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
     }
   }).then(profResoonse=>profResoonse.json()).then(function(profRes){
 
-    profRes.content.forEach(function(prof) => {
+    profRes.content.forEach(function(prof) {
 ˇ    console.log(JSON.stringify(personsUids.get(prof.technicianId)))
     });
   
