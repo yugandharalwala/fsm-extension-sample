@@ -92,7 +92,9 @@ function getServiceContract(cloudHost, account, company, activity_id) {
   console.log(personsUids);
 }).then(function(json2){
   fetch(`https://us.coresystems.net/optimization/api/v2/jobs/${activity_id}/best-matching-technicians`, {
-    method: "POST",
+  mode:'no-cors',
+  credentials: 'include',  
+  method: "POST",
     body: JSON.stringify({ "policy": "Distance", "resources": { "includeInternalPersons": true, "includeCrowdPersons": false, "personIds": personsUids }, "schedulingOptions": { "defaultDrivingTimeMinutes": 30, "maxResults": 10, "timezoneId": "Asia/Calcutta" }, "additionalDataOptions": { "useBlacklist": true, "enableRealTimeLocation": true, "realTimeLocationThresholdInMinutes": 15, "includePlannedJobsAsBookings": false, "includeReleasedJobsAsBookings": true } }),
     headers:{
       'Content-Type': 'application/json',
