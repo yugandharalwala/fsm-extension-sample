@@ -23,7 +23,8 @@
       } else {
         // Initialise ShellSDK to connect with parent shell library
         const shellSdk = ShellSdk.init(parent, '*');
-        shellSdk.addIgnoredOrigin('https://yugandharalwala.github.io/fsm-extension-sample/samples/service-contract');
+        shellSdk.addIgnoredOrigin('https://yugandharalwala.github.io');
+        shellSdk.addIgnoredOrigin('https://us.coresystems.net');
         // Initialise the extension by requesting the fsm context
         shellSdk.emit(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, {
           clientIdentifier: 'service-contract',
