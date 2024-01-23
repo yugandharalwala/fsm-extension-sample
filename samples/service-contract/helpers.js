@@ -3,7 +3,7 @@
 //
 const updateUI = (text) =>
    (document.querySelectorAll('#info')[0].innerText = text);
-
+const finalValue=[];
 //
 // Loop before a token expire to fetch a new one
 //
@@ -28,7 +28,7 @@ function initializeRefreshTokenStrategy(shellSdk, auth) {
 // Request context with activity ID to return serviceContract assigned
 //
 function getServiceContract(cloudHost, account, company, activity_id) {
-
+    finalValue.pop();
    const headers = {
       'Content-Type': 'application/json',
       'X-Client-ID': 'fsm-extension-sample',
@@ -56,7 +56,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
    const personsUids = new Map();
    var tagIds = [];
    const scaleTag = new Map();
-const finalValue=[];
+
 
    return new Promise(resolve => {
       fetch(`https://auth.coresuite.com/api/oauth2/v1/token`,
