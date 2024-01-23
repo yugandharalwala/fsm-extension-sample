@@ -5,7 +5,7 @@ const updateUI = (text) =>
    (document.querySelectorAll('#info')[0].innerText = text);
 
   const updateElement = (text) =>
-     (document.getElementById('#test').innerText = text);
+     (document.getElementById('test').innerText = text);
     const finalValue=[];
 //
 // Loop before a token expire to fetch a new one
