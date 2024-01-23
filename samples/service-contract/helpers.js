@@ -28,7 +28,7 @@ function initializeRefreshTokenStrategy(shellSdk, auth) {
 // Request context with activity ID to return serviceContract assigned
 //
 function getServiceContract(cloudHost, account, company, activity_id) {
-   updateElement('');
+   document.getElementById('test').innerHTML='';
    const headers = {
       'Content-Type': 'application/json',
       'X-Client-ID': 'fsm-extension-sample',
