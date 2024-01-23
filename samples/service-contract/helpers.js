@@ -56,7 +56,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
    const personsUids = new Map();
    var tagIds = [];
    const scaleTag = new Map();
-   var finalValue='';
+
    return new Promise(resolve => {
       fetch(`https://auth.coresuite.com/api/oauth2/v1/token`,
       {
@@ -109,7 +109,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
 
             })
             .then(function (json3) {
-
+            var finalValue='';
             tagIds.forEach((tagId) => {
 
             personsUids.forEach((value,key)=>{
@@ -140,7 +140,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
 
                                                    profRes.content.forEach(function (prof) {
 
-                                                   finalValue.concat('/n test',`${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+                                                   finalValue.concat('/n',`${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
                                                    });
 
                                                 });
