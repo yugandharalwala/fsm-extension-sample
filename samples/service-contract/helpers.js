@@ -3,7 +3,7 @@
 //
 const updateUI = (text) =>
    (document.querySelectorAll('#info')[0].innerText = text);
- const finalValue = [];
+
 //
 // Loop before a token expire to fetch a new one
 //
@@ -28,7 +28,7 @@ function initializeRefreshTokenStrategy(shellSdk, auth) {
 // Request context with activity ID to return serviceContract assigned
 //
 function getServiceContract(cloudHost, account, company, activity_id) {
-
+const finalValue = [];
    const headers = {
       'Content-Type': 'application/json',
       'X-Client-ID': 'fsm-extension-sample',
