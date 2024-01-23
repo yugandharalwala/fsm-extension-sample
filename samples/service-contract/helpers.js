@@ -31,7 +31,7 @@ function initializeRefreshTokenStrategy(shellSdk, auth) {
 // Request context with activity ID to return serviceContract assigned
 //
 function getServiceContract(cloudHost, account, company, activity_id) {
-    //finalValue.pop();
+   updateElement('');
    const headers = {
       'Content-Type': 'application/json',
       'X-Client-ID': 'fsm-extension-sample',
@@ -142,9 +142,11 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                                                 }).then(profResoonse => profResoonse.json()).then(function (profRes) {
                                                    profRes.content.forEach(function (prof) {
                                                     var test=document.getElementById('test').innerText;
-                                                    finalValue.push(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+                                                   // finalValue.push(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
                                                     console.log(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
                                                      updateElement(test+` \n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+                                                     updateUI(test+` \n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+
                                                    });
 
                                                 });
