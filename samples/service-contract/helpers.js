@@ -109,7 +109,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
             })
             .then(function (json3) {
 
-            tagIds.forEach((scaleId, tagId) => {
+            tagIds.forEach((tagId) => {
                                     const tagTechbody = {
                                        "filter": [{
                                           "field": "technicianId",
