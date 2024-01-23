@@ -28,7 +28,7 @@ function initializeRefreshTokenStrategy(shellSdk, auth) {
 // Request context with activity ID to return serviceContract assigned
 //
 function getServiceContract(cloudHost, account, company, activity_id) {
-const finalValue = [];
+
    const headers = {
       'Content-Type': 'application/json',
       'X-Client-ID': 'fsm-extension-sample',
@@ -56,7 +56,7 @@ const finalValue = [];
    const personsUids = new Map();
    var tagIds = [];
    const scaleTag = new Map();
-
+   const finalValue=[];
 
    return new Promise(resolve => {
       fetch(`https://auth.coresuite.com/api/oauth2/v1/token`,
