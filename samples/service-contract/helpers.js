@@ -150,6 +150,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
 
                  });
                  updateUI(finalValue.toString());
+                 finalValue.pop();
             });
 
          });
