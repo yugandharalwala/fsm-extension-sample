@@ -56,6 +56,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
    const personsUids = new Map();
    var tagIds = [];
    const scaleTag = new Map();
+   const finalValue = [];
 
    return new Promise(resolve => {
       fetch(`https://auth.coresuite.com/api/oauth2/v1/token`,
@@ -109,7 +110,6 @@ function getServiceContract(cloudHost, account, company, activity_id) {
 
             })
             .then(function (json3) {
-            var finalValue=[];
             tagIds.forEach((tagId) => {
 
             personsUids.forEach((value,key)=>{
