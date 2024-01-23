@@ -142,10 +142,12 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                                                 }).then(profResoonse => profResoonse.json()).then(function (profRes) {
                                                    profRes.content.forEach(function (prof) {
                                                     var test=document.getElementById('test').innerText;
+                                                    var htmlCode= test+`<div>Person:  ${personsUids.get(prof.technicianId)}</div><div>Skill:  ${prof.tagName}</div> <div>Proficiency level:  ${prof.proficiencyLevel}</div>`
                                                    // finalValue.push(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
                                                     console.log(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
-                                                     updateElement(test+` \n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
-                                                     updateUI(test+` \n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+                                                    // updateElement(test+` \n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+                                                    document.getElementById('#info').innerText=htmlCode;
+                                                    //updateUI(test+` \n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
 
                                                    });
 
