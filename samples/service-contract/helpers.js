@@ -138,7 +138,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                                                    }
                                                 }).then(profResoonse => profResoonse.json()).then(function (profRes) {
                                                    profRes.content.forEach(function (prof) {
-                                                    finalValue.push(`${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+                                                    finalValue.push(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
                                                    });
 
                                                 });
