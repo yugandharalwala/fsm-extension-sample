@@ -139,8 +139,8 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                                                 }).then(profResoonse => profResoonse.json()).then(function (profRes) {
 
                                                    profRes.content.forEach(function (prof) {
-
-                                                   finalValue.concat('/n',`${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+                                                 var test =document.querySelectorAll('#info')[0].innerText;
+                                                    updateUI(test+`/n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
                                                    });
 
                                                 });
@@ -150,7 +150,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
 
 
                  });
-                 updateUI(finalValue);
+                 //updateUI(finalValue);
             });
 
          });
