@@ -140,7 +140,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
 
                                                    profRes.content.forEach(function (prof) {
 
-                                                   finalValue.concat('/n',`${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+                                                   finalValue.concat('/n test',`${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
                                                    });
 
                                                 });
