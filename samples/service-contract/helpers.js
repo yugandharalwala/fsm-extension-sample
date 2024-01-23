@@ -139,7 +139,8 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                                                 }).then(profResoonse => profResoonse.json()).then(function (profRes) {
 
                                                    profRes.content.forEach(function (prof) {
-                                                 var test =document.querySelectorAll('#info')[0].innerText;
+                                                    var test =document.querySelectorAll('#test')[0].innerText;
+                                                    document.querySelectorAll('#test')[0].innerText=test+`/n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`;
                                                     updateUI(test+`/n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
                                                    });
 
