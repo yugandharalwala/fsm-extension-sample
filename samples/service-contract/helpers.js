@@ -57,7 +57,8 @@ function getServiceContract(cloudHost, account, company, activity_id) {
    var tagIds = [];
    const scaleTag = new Map();
    return new Promise(resolve => {
-      fetch(`https://auth.coresuite.com/api/oauth2/v1/token`, {
+      fetch(`https://auth.coresuite.com/api/oauth2/v1/token`,
+      {
          method: "POST",
          body: "grant_type=client_credentials&client_id=000178da-38e4-471a-bfa0-0e7fb67bf90b&client_secret=e217dcc4-1107-41f5-a0a6-1b34a7652a16",
          headers: {
@@ -67,7 +68,8 @@ function getServiceContract(cloudHost, account, company, activity_id) {
          const personQuery = `SELECT DISTINCT u.id,u.firstName+' '+u.lastName as name FROM UnifiedPerson u JOIN Region r ON r.id IN u.regions JOIN Activity a ON r.externalId=a.udf.zActWLA WHERE a.id='${activity_id}'`;
          const tagsQuery = `SELECT r.tag from Requirement r WHERE r.object.objectId='${activity_id}'`;
          //fetch persons based on activity region
-         fetch(`https://${cloudHost}/api/query/v1?account=${account}&company=${company}&dtos=UnifiedPerson.13;Region.10;Activity.13`, {
+         fetch(`https://${cloudHost}/api/query/v1?account=${account}&company=${company}&dtos=UnifiedPerson.13;Region.10;Activity.13`,
+          {
             method: "POST",
             body: JSON.stringify({
                "query": personQuery
@@ -105,72 +107,42 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                console.log(tagIds);
 
             })
- //           .then(function (json3) {
-//               const tbody = {
-//                  "filter": [{
-//                     "field": "id",
-//                     "operator": "=",
-//                     "value": tagIds[0]
-//                  }],
-//                  "page": 0,
-//                  "size": 20
-//               }
-               //get scale ids by passing the tag ids into Tag search API
-//               fetch(`https://us.coresystems.net/cloud-skill-service/api/v1/tags/search`,
-//               {
-//                     method: "POST",
-//                     body: JSON.stringify(tbody),
-//                     headers: {
-//                        'Content-Type': 'application/json',
-//                        'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
-//                        'X-Client-Version': 'v4',
-//                        'X-Account-Id': '96474',
-//                        'X-Account-Name': 'agilent_T0',
-//                        'X-Company-Id': '106651',
-//                        'X-Company-Name': 'Agilent_Worldwide',
-//                        'Authorization': `bearer ${json.access_token}`
-//                     }
-//                  }).then(tagResponse => tagResponse.json()).then(function (tagData) {
-//                     tagData.content.forEach(function (scale) {
-//                        scaleTag.set(tagIds[0], scale.scaleId)
-//                     });
-//                  })
-                  .then(function (tagTechSearch) {
-                     scaleTag.forEach((scaleId, tagId) => {
-                        const tagTechbody = {
-                           "filter": [{
-                              "field": "technicianId",
-                              "operator": "=",
-                              "value": personsUids.keys().next().value
-                           }],
-                           "page": 0,
-                           "size": 20
-                        }
-                        fetch(`https://us.coresystems.net/cloud-skill-service/api/v1/tags/${tagId}/skills/search`, {
-                           method: "POST",
-                           body: JSON.stringify(tagTechbody),
-                           headers: {
-                              'Content-Type': 'application/json',
-                              'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
-                              'X-Client-Version': 'v4',
-                              'X-Account-Id': '96474',
-                              'X-Account-Name': 'agilent_T0',
-                              'X-Company-Id': '106651',
-                              'X-Company-Name': 'Agilent_Worldwide',
-                              'Authorization': `bearer ${json.access_token}`
-                           }
-                        }).then(profResoonse => profResoonse.json()).then(function (profRes) {
+            .then(function (json3) {
 
-                           profRes.content.forEach(function (prof) {
-                              updateUI(`${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
-                           });
+            tagIds.forEach((scaleId, tagId) => {
+                                    const tagTechbody = {
+                                       "filter": [{
+                                          "field": "technicianId",
+                                          "operator": "=",
+                                          "value": personsUids.keys().next().value
+                                       }],
+                                       "page": 0,
+                                       "size": 20
+                                    }
+                                    fetch(`https://us.coresystems.net/cloud-skill-service/api/v1/tags/${tagId}/skills/search`,
+                                    {
+                                       method: "POST",
+                                       body: JSON.stringify(tagTechbody),
+                                       headers: {
+                                          'Content-Type': 'application/json',
+                                          'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
+                                          'X-Client-Version': 'v4',
+                                          'X-Account-Id': '96474',
+                                          'X-Account-Name': 'agilent_T0',
+                                          'X-Company-Id': '106651',
+                                          'X-Company-Name': 'Agilent_Worldwide',
+                                          'Authorization': `bearer ${json.access_token}`
+                                       }
+                                    }).then(profResoonse => profResoonse.json()).then(function (profRes) {
 
-                        });
+                                       profRes.content.forEach(function (prof) {
+                                          updateUI(`${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+                                       });
 
-                     });
+                                    });
 
-                 // });
-           // });
+                 });
+            });
 
          });
       });
