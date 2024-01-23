@@ -3,6 +3,9 @@
 //
 const updateUI = (text) =>
    (document.querySelectorAll('#info')[0].innerText = text);
+
+  const updateElement = (text) =>
+     (document.getElementById('#test').innerText = text);
     const finalValue=[];
 //
 // Loop before a token expire to fetch a new one
@@ -138,8 +141,10 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                                                    }
                                                 }).then(profResoonse => profResoonse.json()).then(function (profRes) {
                                                    profRes.content.forEach(function (prof) {
+                                                    var test=document.getElementById('#test').innerText;
                                                     finalValue.push(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
                                                     console.log(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+                                                     updateElement(test+` \n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
                                                    });
 
                                                 });
@@ -149,7 +154,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
 
 
                  });
-                 updateUI(finalValue.toString());
+                // updateUI(finalValue.toString());
                  finalValue=[];
             });
 
