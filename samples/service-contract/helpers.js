@@ -59,7 +59,8 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                'Content-Type': 'application/json',
                'X-Client-ID': 'fsm-extension-sample',
                'X-Client-Version': '1.0.0',
-               'Authorization': `bearer ${json.access_token}`,
+               //'Authorization': `bearer ${json.access_token}`,
+               'Authorization': `bearer ${sessionStorage.getItem('token')}`
             }
          }).then(response1 => response1.json()).then(function (json1) {
             //updateUI(JSON.stringify(json1))
@@ -78,7 +79,8 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                      'Content-Type': 'application/json',
                      'X-Client-ID': 'fsm-extension-sample',
                      'X-Client-Version': '1.0.0',
-                     'Authorization': `bearer ${json.access_token}`,
+                    // 'Authorization': `bearer ${json.access_token}`,
+                    'Authorization': `bearer ${sessionStorage.getItem('token')}`
                   }
                }).then(response2 => response2.json()).then(function (tags) {
 
@@ -112,7 +114,8 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                               'X-Account-Name': 'agilent_T0',
                               'X-Company-Id': '106651',
                               'X-Company-Name': 'Agilent_Worldwide',
-                              'Authorization': `bearer ${json.access_token}`
+                              //'Authorization': `bearer ${json.access_token}`
+                              'Authorization': `bearer ${sessionStorage.getItem('token')}`
                            }
                         }).then(profResoonse => profResoonse.json()).then(function (profRes) {
                            profRes.content.forEach(function (prof) {
