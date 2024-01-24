@@ -59,8 +59,7 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                'Content-Type': 'application/json',
                'X-Client-ID': 'fsm-extension-sample',
                'X-Client-Version': '1.0.0',
-               //'Authorization': `bearer ${json.access_token}`,
-               'Authorization': `bearer ${sessionStorage.getItem('token')}`
+               'Authorization': `bearer ${json.access_token}`
             }
          }).then(response1 => response1.json()).then(function (json1) {
             //updateUI(JSON.stringify(json1))
@@ -79,8 +78,8 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                      'Content-Type': 'application/json',
                      'X-Client-ID': 'fsm-extension-sample',
                      'X-Client-Version': '1.0.0',
-                    // 'Authorization': `bearer ${json.access_token}`,
-                    'Authorization': `bearer ${sessionStorage.getItem('token')}`
+                   'Authorization': `bearer ${json.access_token}`
+                    
                   }
                }).then(response2 => response2.json()).then(function (tags) {
 
@@ -110,12 +109,12 @@ function getServiceContract(cloudHost, account, company, activity_id) {
                               'Content-Type': 'application/json',
                               'X-Client-ID': '000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1',
                               'X-Client-Version': 'v4',
-                              'X-Account-Id': '96474',
-                              'X-Account-Name': 'agilent_T0',
-                              'X-Company-Id': '106651',
-                              'X-Company-Name': 'Agilent_Worldwide',
-                              //'Authorization': `bearer ${json.access_token}`
-                              'Authorization': `bearer ${sessionStorage.getItem('token')}`
+                              'X-Account-Id': `${accountId}`,
+                              'X-Account-Name': `${account}`,
+                              'X-Company-Id': `${companyId}`,
+                              'X-Company-Name': `${company}`,
+                              'Authorization': `bearer ${json.access_token}`
+                             
                            }
                         }).then(profResoonse => profResoonse.json()).then(function (profRes) {
                            profRes.content.forEach(function (prof) {
