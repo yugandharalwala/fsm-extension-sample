@@ -40,6 +40,8 @@
             cloudHost,
             account,
             company,
+            accountId,
+            companyId,
             user,
             // extract authentication data from event content
             auth
@@ -54,7 +56,7 @@
 
             updateUI(`Loading ...`);
 
-            let serviceContract = await getServiceContract(cloudHost, account, company, activityID);
+            let serviceContract = await getServiceContract(cloudHost, account,accountId, company,companyId, activityID);
 
            // updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
           });

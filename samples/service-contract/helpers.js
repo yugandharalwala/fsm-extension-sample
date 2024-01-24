@@ -27,7 +27,7 @@ function initializeRefreshTokenStrategy(shellSdk, auth) {
 //
 // Request context with activity ID to return serviceContract assigned
 //
-function getServiceContract(cloudHost, account, company, activity_id) {
+function getServiceContract(cloudHost, account,accountId, company,companyId, activity_id) {
    document.getElementById('test').innerHTML='';
    const headers = {
       'Content-Type': 'application/json',
