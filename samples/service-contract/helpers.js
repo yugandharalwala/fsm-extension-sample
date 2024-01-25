@@ -45,7 +45,7 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
    return new Promise(resolve => {
       fetch(`https://auth.coresuite.com/api/oauth2/v1/token`, {
          method: "POST",
-         body: `${accountId}=='95980'?${t1Credentials}:${t0Credentials}`,
+         body: `${accountId}=='95980'`?`${t1Credentials}`:`${t0Credentials}`,
          headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
          }
