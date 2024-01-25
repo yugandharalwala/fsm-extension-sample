@@ -52,7 +52,7 @@
           initializeRefreshTokenStrategy(shellSdk, auth);
           console.log(JSON.parse(JSON.stringify(event)));
           // Add a listenner expecting activityID
-          shellSdk.onViewState('activityID', activityID => {
+          shellSdk.onViewState('activityID', async activityID => {
 
             updateUI(`Loading ...`);
 

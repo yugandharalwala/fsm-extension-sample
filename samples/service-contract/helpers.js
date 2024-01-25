@@ -130,6 +130,15 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
                                   
                            });
 
+                        }).then(function(test){
+
+                           let htmlString='';
+                           json3.forEach(function(value,key){
+                              htmlString += skill.get(key)+value.toString();
+                           });
+                           document.getElementById('info').innerHTML =htmlString;
+                           console.log(json3);
+                           console.log(skill);
                         });
 
 
@@ -138,13 +147,7 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
 
                   });
                   //
-                  let htmlString='';
-                  json3.forEach(function(value,key){
-                     htmlString += skill.get(key)+value.toString();
-                  });
-                  document.getElementById('info').innerHTML =htmlString;
-                  console.log(json3);
-                  console.log(skill);
+                  
 
                });
 
