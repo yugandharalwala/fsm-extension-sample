@@ -38,11 +38,14 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
 
    const personsUids = new Map();
    var tagIds = [];
+   var t0Credentials="grant_type=client_credentials&client_id=000178da-38e4-471a-bfa0-0e7fb67bf90b&client_secret=e217dcc4-1107-41f5-a0a6-1b34a7652a16";
+   var t1Credentials="grant_type=client_credentials&client_id=000176ec-eb15-4c2a-b9c7-d3e28ddfd0a1&client_secret=30b22792-0cf4-49a1-91c1-d202336f5378";
+
 
    return new Promise(resolve => {
       fetch(`https://auth.coresuite.com/api/oauth2/v1/token`, {
          method: "POST",
-         body: "grant_type=client_credentials&client_id=000178da-38e4-471a-bfa0-0e7fb67bf90b&client_secret=e217dcc4-1107-41f5-a0a6-1b34a7652a16",
+         body: `${accountId}=='95980'?${t1Credentials}:${t0Credentials}`,
          headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
          }
