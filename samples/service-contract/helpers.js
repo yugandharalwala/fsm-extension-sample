@@ -121,7 +121,7 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
                         }).then(profResoonse => profResoonse.json()).then(function (profRes) {
                            profRes.content.forEach(function (prof) {
                               json3.get(tagId).push(`<div>Person:  ${personsUids.get(prof.technicianId)}</div><div class='under-line'>Proficiency level:  ${prof.proficiencyLevel}</div>`);
-                              skill.set(tagId,`<div>${prof.tagName}</div>`);
+                              skill.set(tagId,`<div>Skill Name: ${prof.tagName}</div>`);
                               //var prevhtml = document.getElementById('test').innerHTML;
                               //var htmlCode = prevhtml + `<div>Person:  ${personsUids.get(prof.technicianId)}</div><div class='under-line'>Proficiency level:  ${prof.proficiencyLevel}</div>`
                               console.log(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
@@ -134,7 +134,7 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
 
                            let htmlString='';
                            json3.forEach(function(value,key){
-                              htmlString += skill.get(key)+value.toString();
+                              htmlString += skill.get(key)+value.join('');
                            });
                            document.getElementById('info').innerHTML =htmlString;
                            console.log(json3);
