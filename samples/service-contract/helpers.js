@@ -120,18 +120,14 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
                            }
                         }).then(profResoonse => profResoonse.json()).then(function (profRes) {
                            profRes.content.forEach(function (prof) {
-                              json3.get(tagId).push(`${personsUids.get(prof.technicianId)}`);
-                              json3.get(tagId).push(`${prof.proficiencyLevel}`);
+                              json3.get(tagId).push(`<div>Person:  ${personsUids.get(prof.technicianId)}</div><div class='under-line'>Proficiency level:  ${prof.proficiencyLevel}</div>`);
                               skill.set(tagId,`${prof.tagName}`);
                               var prevhtml = document.getElementById('test').innerHTML;
-                              var htmlCode = prevhtml + `<div>Person:  ${personsUids.get(prof.technicianId)}</div><div>Skill:  ${prof.tagName}</div> <div class='under-line'>Proficiency level:  ${prof.proficiencyLevel}</div>`
-                              // finalValue.push(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+                              var htmlCode = prevhtml + `<div>Person:  ${personsUids.get(prof.technicianId)}</div><div class='under-line'>Proficiency level:  ${prof.proficiencyLevel}</div>`
                               console.log(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
-                              // updateElement(test+` \n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
                               document.getElementById('test').innerHTML = htmlCode;
                               document.getElementById('info').innerHTML = htmlCode;
-                              //updateUI(test+` \n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
-
+                                  
                            });
 
                         });
@@ -141,6 +137,9 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
 
 
                   });
+                  //
+                  console.log(json3);
+                  console.log(skill);
 
                });
 
