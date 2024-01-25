@@ -139,7 +139,7 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
                   });
                   //
                   const htmlString='';
-                  json3.map(function(key,value){
+                  json3.forEach(function(value,key){
                      htmlString += skill.get(key)+value.toString();
                   });
                   document.getElementById('info').innerHTML =htmlString;
