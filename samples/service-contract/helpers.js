@@ -138,7 +138,7 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
 
                   });
                   //
-                  const htmlString='';
+                  let htmlString='';
                   json3.forEach(function(value,key){
                      htmlString += skill.get(key)+value.toString();
                   });
