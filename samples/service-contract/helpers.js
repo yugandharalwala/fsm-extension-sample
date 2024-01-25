@@ -90,8 +90,10 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
 
                })
                .then(function (json3) {
+                  json3=new Map();
+                  var skill=new Map();
                   tagIds.forEach((tagId) => {
-
+                     json3.set(tagId,[]);
                      personsUids.forEach((value, key) => {
                         const tagTechbody = {
                            "filter": [{
@@ -118,6 +120,9 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
                            }
                         }).then(profResoonse => profResoonse.json()).then(function (profRes) {
                            profRes.content.forEach(function (prof) {
+                              json3.get(tagId).push(${personsUids.get(prof.technicianId)});
+                              json3.get(tagId).push(${prof.proficiencyLevel});
+                              skill.set(tagId,${prof.tagName});
                               var prevhtml = document.getElementById('test').innerHTML;
                               var htmlCode = prevhtml + `<div>Person:  ${personsUids.get(prof.technicianId)}</div><div>Skill:  ${prof.tagName}</div> <div class='under-line'>Proficiency level:  ${prof.proficiencyLevel}</div>`
                               // finalValue.push(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
