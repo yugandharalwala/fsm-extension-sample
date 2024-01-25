@@ -128,7 +128,7 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
                               skill.set(tagId,`<div>Skill Name: ${prof.tagName}</div>`);
                               //var prevhtml = document.getElementById('test').innerHTML;
                               //var htmlCode = prevhtml + `<div>Person:  ${personsUids.get(prof.technicianId)}</div><div class='under-line'>Proficiency level:  ${prof.proficiencyLevel}</div>`
-                              console.log(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
+                              //console.log(`\n ${personsUids.get(prof.technicianId)}` + `\n Skill- ${prof.tagName} \n Skill proficiency level :${prof.proficiencyLevel}`);
                               //document.getElementById('test').innerHTML = htmlCode;
                              // document.getElementById('info').innerHTML = htmlCode;
                                   
@@ -140,7 +140,12 @@ function getServiceContract(cloudHost, account,accountId, company,companyId, act
                            json3.forEach(function(value,key){
                               htmlString += skill.get(key)+value.join('');
                            });
+                           if(htmlString!=''){
                            document.getElementById('info').innerHTML =htmlString;
+                           }
+                           else{
+                              document.getElementById('info').innerHTML ='No Data Available';
+                           }
                            console.log(json3);
                            console.log(skill);
                         });
