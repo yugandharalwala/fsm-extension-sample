@@ -1,19 +1,19 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Service contract available</title>
-  <link href="https://unpkg.com/fundamental-styles" rel="stylesheet">
-  <link href="styles.css" rel="stylesheet">
-</head>
-<body>
-<div>
-  <h2 class="fd-title fd-title--h2" id="info">No selected activities</h2>
-  <div class="hide" id="test"></div>
-</div>
-<script src="https://unpkg.com/fsm-shell"></script>
-<script src="helpers.js"></script>
-<script>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Service contract available</title>
+    <link href="https://unpkg.com/fundamental-styles@latest/dist/fundamental-styles.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+  </head>
+  <body>
+    <div>
+      <h2 class="fd-title fd-title--h2" id="info">No selected activities</h2>
+    </div>
+    <script src="https://unpkg.com/fsm-shell"></script>
+    <script src="helpers.js"></script>
+    <script>
       // Import ShellSDK and events list from FSMShell global variable
       // see https://github.com/SAP/fsm-shell for more details.
       const { ShellSdk, SHELL_EVENTS } = FSMShell;
@@ -24,7 +24,7 @@
       } else {
         // Initialise ShellSDK to connect with parent shell library
         const shellSdk = ShellSdk.init(parent, '*');
-        //shellSdk.setAllowedOrigins(['https://yugandharalwala.github.io','https://us.coresystems.net','https://coresystems.net']);
+
         // Initialise the extension by requesting the fsm context
         shellSdk.emit(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, {
           clientIdentifier: 'service-contract',
@@ -32,6 +32,7 @@
             response_type: 'token'  // request a user token within the context
           }
         });
+
         // Callback on fsm context response
         shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, (event) => {
 
@@ -40,31 +41,38 @@
             cloudHost,
             account,
             company,
-            accountId,
-            companyId,
             user,
             // extract authentication data from event content
             auth
           } = JSON.parse(event);
 
-          // Access_token has a short life stpan and needs to be refreshed before expiring
-          // Each extension need to implement its own strategy to fresh it.
+          /**
+           * Access_token has a short life span and needs to be refreshed before expiring. Each
+           * extension needs to implement its own strategy to fresh it.
+           * 
+           * IMPORTANT: You only receive a new token in case the current token's validation period
+           * is less than one minute. If a new token is requested and the validation period is one
+           * minute or more, you receive the current token again with an updated validation period.
+           * A token's validation period is provided via the property expires_in, which contains
+           * the time left in seconds.
+           */
           initializeRefreshTokenStrategy(shellSdk, auth);
-          console.log(JSON.parse(JSON.stringify(event)));
-          // Add a listenner expecting activityID
-          shellSdk.onViewState('activityID', async activityID => {
 
-            updateUI(`Loading ...`);
-
-            let serviceContract = await getServiceContract(cloudHost, account,accountId, company,companyId, activityID);
-
-           // updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
-          });
-
-
+          // Add a listener expecting activityID
+          fsm.shellSdk.onReady(() => {
+    console.log("Shell SDK is ready!");
+   // Subscribe to the activity update event
+   fsm.shellSdk.subscribe('activity.update', (event) => {
+       console.log('Activity updated:', event);
+       // Access the updated activity data
+       const updatedActivity = event.activity;
+       console.log('Activity :', updatedActivity);
+       // Extend functionality here
+       //extendActivityFunctionality(updatedActivity);
+   });
+});
         });
-
       }
     </script>
-</body>
+  </body>
 </html>
