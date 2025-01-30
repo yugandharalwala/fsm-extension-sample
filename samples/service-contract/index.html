@@ -57,10 +57,7 @@
            * the time left in seconds.
            */
           initializeRefreshTokenStrategy(shellSdk, auth);
-
-          // Add a listener expecting activityID
-          shellSdk.onReady(() => {
-    console.log("Shell SDK is ready!");
+        console.log("Shell SDK is ready!");
    // Subscribe to the activity update event
    shellSdk.subscribe('activity.update', (event) => {
        console.log('Activity updated:', event);
@@ -70,9 +67,8 @@
        // Extend functionality here
        //extendActivityFunctionality(updatedActivity);
    });
-});
           
-          
+
 
         });
       }
