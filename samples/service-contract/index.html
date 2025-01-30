@@ -60,9 +60,9 @@
           initializeRefreshTokenStrategy(shellSdk, auth);
 
           // Add a listener expecting activityID
-          shellSdk.once(SHELL_EVENTS.Version1.REQUIRE_CONTEXT,(context)=> {
+          shellSdk.onViewState((viewState) => {
 
-            console.log("context:::",context);
+            console.log("context:::",viewState);
 
             //updateUI(`Loading ...`);
 
