@@ -63,14 +63,14 @@
          
         });
 
- shellSdk.onViewState((viewState) => {
+ shellSdk.onViewState('activityID', async activityID => {
 
-            console.log("context:::",viewState);
+            console.log("activityID:::",activityID);
 
         
           });
         const handler = (context, origin) => {
-  console.log("context:::",context);
+  console.log("origin:::",origin);
 };
 shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, handler);
 
