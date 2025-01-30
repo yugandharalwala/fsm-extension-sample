@@ -13,7 +13,7 @@
     <script src="https://unpkg.com/fsm-shell"></script>
     <script src="helpers.js"></script>
     <script>
-    import { ShellSdk, SHELL_EVENTS } from 'fsm-shell-sdk';
+    const { ShellSdk, SHELL_EVENTS } = FSMShell;
 // Initialize Shell SDK (assuming it's running inside an iframe)
 const shellSdk = new ShellSdk(window.parent);
 shellSdk.emit(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, {
@@ -21,7 +21,8 @@ shellSdk.emit(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, {
 });
 // Listen for activity state changes
 shellSdk.onViewState((viewState) => {
-   if (viewState?.context?.activityId) {
+   console.log("Activity Updated:",viewState);
+   if (viewState.context.activityId) {
        console.log("Activity Updated:", viewState.context.activityId);
        // Fetch updated activity details if needed
        fetchActivityDetails(viewState.context.activityId);
@@ -30,7 +31,7 @@ shellSdk.onViewState((viewState) => {
 // Function to fetch updated activity details
 function fetchActivityDetails(activityId) {
    shellSdk.emit(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, {
-       clientIdentifier: 'your-extension-id',
+       clientIdentifier: 'service-contract',
        contextAttributes: ['activity']
    });
    shellSdk.once(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, (context) => {
