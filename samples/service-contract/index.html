@@ -59,10 +59,10 @@
           initializeRefreshTokenStrategy(shellSdk, auth);
 
           // Add a listener expecting activityID
-          fsm.shellSdk.onReady(() => {
+          shellSdk.onReady(() => {
     console.log("Shell SDK is ready!");
    // Subscribe to the activity update event
-   fsm.shellSdk.subscribe('activity.update', (event) => {
+   shellSdk.subscribe('activity.update', (event) => {
        console.log('Activity updated:', event);
        // Access the updated activity data
        const updatedActivity = event.activity;
@@ -71,7 +71,7 @@
        //extendActivityFunctionality(updatedActivity);
    });
 });
-          
+
         });
       }
     </script>
