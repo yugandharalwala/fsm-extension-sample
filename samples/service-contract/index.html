@@ -50,7 +50,20 @@ const contextUpdateHandler = (context, origin) => {
 // Subscribe to context update events
 shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, contextUpdateHandler);
 
-
+// Define a handler for permission requests
+const permissionHandler = (permissionRequest) => {
+ // Process the permission request
+ console.log('Permission request:', permissionRequest);
+};
+// Subscribe to permission request events
+shellSdk.on(SHELL_EVENTS.Version1.GET_PERMISSIONS, permissionHandler);
+// Define an error handler
+const errorHandler = (error) => {
+ console.error('Error received from Shell:', error);
+ // Implement additional error handling logic as needed
+};
+// Subscribe to error events
+shellSdk.on(SHELL_EVENTS.ERROR, errorHandler);
 
       }
     </script>
