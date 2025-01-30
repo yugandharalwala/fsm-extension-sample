@@ -59,6 +59,23 @@
           initializeRefreshTokenStrategy(shellSdk, auth);
 
         });
+// Define a handler for context updates
+const contextUpdateHandler = (context, origin) => {
+ // Ensure the message is from a trusted origin
+ if (origin !== 'expected-origin') {
+   return;
+ }
+ // Check if the context pertains to an activity update
+ if (context && context.type === 'Activity' && context.action === 'update') {
+   // Handle the activity update
+   console.log('Activity updated:', context.data);
+ }
+};
+// Subscribe to context update events
+shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, contextUpdateHandler);
+
+
+
       }
     </script>
   </body>
