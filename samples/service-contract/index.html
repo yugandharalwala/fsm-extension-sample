@@ -60,17 +60,20 @@
           initializeRefreshTokenStrategy(shellSdk, auth);
 
           // Add a listener expecting activityID
-          shellSdk.onViewState((viewState) => {
+         
+        });
+
+ shellSdk.onViewState((viewState) => {
 
             console.log("context:::",viewState);
 
-            //updateUI(`Loading ...`);
-
-            //let serviceContract = await getServiceContract(cloudHost, account, company, activityID);
-
-           // updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
+        
           });
-        });
+        const handler = (context, origin) => {
+  console.log("context:::",context);
+};
+shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, handler);
+
       }
     </script>
   </body>
