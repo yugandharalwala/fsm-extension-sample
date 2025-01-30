@@ -45,7 +45,7 @@
             // extract authentication data from event content
             auth
           } = JSON.parse(event);
-
+          console.log(event);
           /**
            * Access_token has a short life span and needs to be refreshed before expiring. Each
            * extension needs to implement its own strategy to fresh it.
@@ -57,18 +57,6 @@
            * the time left in seconds.
            */
           initializeRefreshTokenStrategy(shellSdk, auth);
-        console.log("Shell SDK is ready!");
-   // Subscribe to the activity update event
-   shellSdk.subscribe('activity.update', (event) => {
-       console.log('Activity updated:', event);
-       // Access the updated activity data
-       const updatedActivity = event.activity;
-       console.log('Activity :', updatedActivity);
-       // Extend functionality here
-       //extendActivityFunctionality(updatedActivity);
-   });
-          
-
 
         });
       }
