@@ -18,49 +18,19 @@
       // see https://github.com/SAP/fsm-shell for more details.
       const { ShellSdk, SHELL_EVENTS } = FSMShell;
 
-      // Display an error message if extension does not run within shell
-      if (!ShellSdk.isInsideShell()) {
-        updateUI('Unable to reach shell eventAPI');
-      } else {
-        // Initialise ShellSDK to connect with parent shell library
-        const shellSdk = ShellSdk.init(window.parent, '*');
-
-        // Initialise the extension by requesting the fsm context
-        shellSdk.emit(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, {});
-
-        // Callback on fsm context response
-// Define a handler for context updates
-const contextUpdateHandler = (context, origin) => {
-  console.log('context:', context);
- // Ensure the message is from a trusted origin
- if (origin !== 'expected-origin') {
-   return;
- }
- // Check if the context pertains to an activity update
- if (context && context.type === 'Activity' && context.action === 'update') {
-   // Handle the activity update
-   console.log('Activity updated:', context.data);
- }
-};
-// Subscribe to context update events
-shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, contextUpdateHandler);
-
-// Define a handler for permission requests
-const permissionHandler = (permissionRequest) => {
- // Process the permission request
- console.log('Permission request:', permissionRequest);
-};
-// Subscribe to permission request events
-shellSdk.on(SHELL_EVENTS.Version1.GET_PERMISSIONS, permissionHandler);
-// Define an error handler
-const errorHandler = (error) => {
- console.error('Error received from Shell:', error);
- // Implement additional error handling logic as needed
-};
-// Subscribe to error events
-shellSdk.on(SHELL_EVENTS.ERROR, errorHandler);
-
-      }
+  const shellSdk = new ShellSdk(window.parent);
+// Subscribe to onViewState for Activity Updates
+shellSdk.onViewState((event) => {
+   if (event?.state === 'ACTIVITY_DETAILS' && event.context) {
+       console.log("Activity Updated:", event.context);
+       // Extract activity details
+       const activityId = event.context.activity?.id;
+       const activityCode = event.context.activity?.code;
+       console.log(`Activity ID: ${activityId}, Code: ${activityCode}`);
+       // Perform necessary updates in your extension
+       updateActivityUI(activityId, activityCode);
+   }
+});
     </script>
   </body>
 </html>
