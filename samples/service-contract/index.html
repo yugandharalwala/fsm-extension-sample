@@ -34,33 +34,9 @@
         });
 
         // Callback on fsm context response
-        shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, (event) => {
-
-          const {
-            // extract required context from event content
-            cloudHost,
-            account,
-            company,
-            user,
-            // extract authentication data from event content
-            auth
-          } = JSON.parse(event);
-          console.log(event);
-          /**
-           * Access_token has a short life span and needs to be refreshed before expiring. Each
-           * extension needs to implement its own strategy to fresh it.
-           * 
-           * IMPORTANT: You only receive a new token in case the current token's validation period
-           * is less than one minute. If a new token is requested and the validation period is one
-           * minute or more, you receive the current token again with an updated validation period.
-           * A token's validation period is provided via the property expires_in, which contains
-           * the time left in seconds.
-           */
-          initializeRefreshTokenStrategy(shellSdk, auth);
-
-        });
 // Define a handler for context updates
 const contextUpdateHandler = (context, origin) => {
+  console.log('context:', context);
  // Ensure the message is from a trusted origin
  if (origin !== 'expected-origin') {
    return;
