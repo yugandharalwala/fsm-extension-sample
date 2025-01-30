@@ -58,25 +58,12 @@
           initializeRefreshTokenStrategy(shellSdk, auth);
 
           // Add a listener expecting activityID
-          shellSdk.onViewState('activityID', async activityID => {
-
-            updateUI(`Loading ...`);
-
-            let serviceContract = await getServiceContract(cloudHost, account, company, activityID);
-
-            updateUI(serviceContract ? `${serviceContract.contractType}` : `NO CONTRACT`);
-          });
-
+         
     shellSdk.onViewState((event) => {
-   if (event?.state === 'ACTIVITY_DETAILS' && event.context) {
-       console.log("Activity Updated:", event.context);
-       // Extract activity details
-       const activityId = event.context.activity?.id;
-       const activityCode = event.context.activity?.code;
-       console.log(`Activity ID: ${activityId}, Code: ${activityCode}`);
-       // Perform necessary updates in your extension
-       updateUI(activityCode);
-   }
+   
+       console.log("Activity state:", event.state);
+       onsole.log("Activity context:", event.context);
+   
 });
 
 
