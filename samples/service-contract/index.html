@@ -27,6 +27,7 @@
         // Initialise the extension by requesting the fsm context
         shellSdk.emit(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, {
           clientIdentifier: 'service-contract',
+          contextAttributes:['activity','serviceCall'],
           auth: {
             response_type: 'token'  // request a user token within the context
           }
@@ -59,9 +60,9 @@
           initializeRefreshTokenStrategy(shellSdk, auth);
 
           // Add a listener expecting activityID
-          shellSdk.onViewState((viewState) => {
+          shellSdk.once(SHELL_EVENTS.Version1.REQUIRE_CONTEXT,(context)=> {
 
-            console.log(viewState);
+            console.log("context:::",context);
 
             //updateUI(`Loading ...`);
 
