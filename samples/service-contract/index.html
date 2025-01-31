@@ -32,13 +32,15 @@
           auth: {
             response_type: 'token'  // request a user token within the context
           }
+
+      shellSdk.onViewState('eventId',async eventId =>{
+  console.log(eventId);
+
+});         
         });
 
 
-shellSdk.onViewState('eventId',async eventId =>{
-  console.log(eventId);
 
-});
 
       }
     </script>
