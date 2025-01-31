@@ -35,8 +35,7 @@
           }
         });
 
-shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, handler);
-shellSdk.on(SHELL_EVENTS.ERROR, errorhandler);
+
 
 const handler = (context, origin) => {
    console.log('context:',context);
@@ -47,6 +46,8 @@ const errorhandler = (error) => {
    console.log('error:',error);
 
 };
+shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, handler);
+shellSdk.on(SHELL_EVENTS.ERROR, errorhandler);
 
 shellSdk.onViewState((viewState) =>{
 console.log(viewState);
