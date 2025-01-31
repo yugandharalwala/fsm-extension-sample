@@ -28,43 +28,26 @@
         shellSdk.emit(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, {
           clientIdentifier: 'service-contract',
           contextAttributes:['activity','serviceCall'],
+           clientIdentifier: '000178da-fe30-413f-8f5b-2253a2656ac1',
+          clientSecret: 'ea897154-d132-471e-9471-63b007e5a7d9',
           auth: {
             response_type: 'token'  // request a user token within the context
           }
         });
 
-        // Callback on fsm context response
-        shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, (event) => {
-          console.log(event);
+shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, handler);
+shellSdk.on(SHELL_EVENTS.ERROR, errorhandler);
 
-          const {
-            // extract required context from event content
-            cloudHost,
-            account,
-            company,
-            user,
-            // extract authentication data from event content
-            auth
-          } = JSON.parse(event);
+const handler = (context, origin) => {
+   console.log('context:',context);
 
-          /**
-           * Access_token has a short life span and needs to be refreshed before expiring. Each
-           * extension needs to implement its own strategy to fresh it.
-           * 
-           * IMPORTANT: You only receive a new token in case the current token's validation period
-           * is less than one minute. If a new token is requested and the validation period is one
-           * minute or more, you receive the current token again with an updated validation period.
-           * A token's validation period is provided via the property expires_in, which contains
-           * the time left in seconds.
-           */
-          initializeRefreshTokenStrategy(shellSdk, auth);
+};
 
-          // Add a listener expecting activityID
-         
-        });
-shellSdk.on(SHELL_EVENTS.Version1.GET_FEATURE_FLAG, (response) => {
-  console.log(`${response.key} is now ${response.value}`);
-});
+const errorhandler = (error) => {
+   console.log('error:',error);
+
+};
+
 
       }
     </script>
