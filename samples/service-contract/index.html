@@ -52,6 +52,11 @@ shellSdk.onViewState((viewState) =>{
 console.log(viewState);
 
 });
+window.fsmShellMessageLogger.filterTable({
+  type: ['V1.REQUIRE_CONTEXT', 'V1.GET_PERMISSIONS'],
+  component: 'shell-host',
+  direction: 'incoming',
+});
 
 
       }
