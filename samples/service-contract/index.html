@@ -62,17 +62,9 @@
           // Add a listener expecting activityID
          
         });
-
- shellSdk.onViewState('activity', async activity => {
-
-            console.log("activity:::",activity);
-
-        
-          });
-        const handler = (context, origin) => {
-  console.log("origin:::",origin);
-};
-shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, handler);
+shellSdk.on(SHELL_EVENTS.Version1.GET_FEATURE_FLAG, (response) => {
+  console.log(`${response.key} is now ${response.value}`);
+});
 
       }
     </script>
