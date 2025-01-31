@@ -27,8 +27,7 @@
         // Initialise the extension by requesting the fsm context
         shellSdk.emit(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, {
           clientIdentifier: 'service-contract',
-          contextAttributes:['activity','serviceCall'],
-           clientIdentifier: '000178da-fe30-413f-8f5b-2253a2656ac1',
+          clientIdentifier: '000178da-fe30-413f-8f5b-2253a2656ac1',
           clientSecret: 'ea897154-d132-471e-9471-63b007e5a7d9',
           auth: {
             response_type: 'token'  // request a user token within the context
@@ -36,29 +35,10 @@
         });
 
 
-
-const handler = (context, origin) => {
-   console.log('context:',context);
-
-};
-
-const errorhandler = (error) => {
-   console.log('error:',error);
-
-};
-shellSdk.on(SHELL_EVENTS.Version1.REQUIRE_CONTEXT, handler);
-shellSdk.on(SHELL_EVENTS.ERROR, errorhandler);
-
-shellSdk.onViewState((viewState) =>{
-console.log(viewState);
+shellSdk.onViewState('eventId',async eventId =>{
+  console.log(eventId);
 
 });
-window.fsmShellMessageLogger.filterTable({
-  type: ['V1.REQUIRE_CONTEXT', 'V1.GET_PERMISSIONS'],
-  component: 'shell-host',
-  direction: 'incoming',
-});
-
 
       }
     </script>
